@@ -28,7 +28,7 @@ public class ShiroConfig {
     @Bean
     public ShiroRealm shiroRealm(){
         ShiroRealm shiroRealm = new ShiroRealm();
-        shiroRealm.setCacheManager(cacheManager1());
+ //       shiroRealm.setCacheManager(cacheManager1());
         return shiroRealm;
     }
     @Bean
@@ -44,10 +44,10 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
         //可改
-        shiroFilterFactoryBean.setLoginUrl("/SysUser/loginOut");
+        shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/getRole");
         Map<String, Filter> filterMap=new LinkedHashMap<>();
-        filterMap.put("kickout",kickoutSessionControlFilter());
+ //       filterMap.put("kickout",kickoutSessionControlFilter());
        // filterMap.put("jwt",new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
         //有序Map
@@ -57,7 +57,7 @@ public class ShiroConfig {
 //        map.put("/v2/api-docs", "anon");
 //        map.put("/webjars/springfox-swagger-ui/**", "anon");
 //        map.put("/SysUser/login","anon");
-        map.put("/SysUser/loginOut","anon");
+ //       map.put("/SysUser/loginOut","anon");
         //拦截绘话把session
     //    map.put("/SysUser/**","noSessionCreation,jwt");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
@@ -81,45 +81,45 @@ public class ShiroConfig {
         defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
         return defaultAdvisorAutoProxyCreator;
     }
-    @Bean
-    public DefaultWebSessionManager sessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setSessionDAO(redisSessionDAO());
-        sessionManager.setCacheManager(cacheManager1());
-        return sessionManager;
-    }
-    @Bean
-    public RedisSessionDAO redisSessionDAO() {
-        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setKeyPrefix("SessionDao");
-        redisSessionDAO.setRedisManager(redisManager());
-        return redisSessionDAO;
-    }
-    @Bean
-    public RedisManager redisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost("106.75.48.9");
-        redisManager.setPort(32002);
-        redisManager.setExpire(1800);// 配置缓存过期时间
-        redisManager.setTimeout(5000);
-        // redisManager.setPassword(password);
-        return redisManager;
-    }
-    @Bean
-    public RedisCacheManager cacheManager1() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        redisCacheManager.setKeyPrefix("Cache");
-        return redisCacheManager;
-    }
-    @Bean
-    public KickoutSessionControlFilter kickoutSessionControlFilter(){
-        KickoutSessionControlFilter kickoutSessionControlFilter = new KickoutSessionControlFilter();
-        kickoutSessionControlFilter.setCacheManager(cacheManager1());
-        kickoutSessionControlFilter.setKickoutAfter(false);
-        kickoutSessionControlFilter.setMaxSession(1);
-        kickoutSessionControlFilter.setKickoutUrl("/SysUser/loginOut");
-        kickoutSessionControlFilter.setSessionManager(sessionManager());
-        return kickoutSessionControlFilter;
-    }
+//    @Bean
+//    public DefaultWebSessionManager sessionManager() {
+//        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+//        sessionManager.setSessionDAO(redisSessionDAO());
+//        sessionManager.setCacheManager(cacheManager1());
+//        return sessionManager;
+//    }
+//    @Bean
+//    public RedisSessionDAO redisSessionDAO() {
+//        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+//        redisSessionDAO.setKeyPrefix("SessionDao");
+//        redisSessionDAO.setRedisManager(redisManager());
+//        return redisSessionDAO;
+  //  }
+//    @Bean
+//    public RedisManager redisManager() {
+//        RedisManager redisManager = new RedisManager();
+//        redisManager.setHost("106.75.48.9");
+//        redisManager.setPort(32002);
+//        redisManager.setExpire(1800);// 配置缓存过期时间
+//        redisManager.setTimeout(5000);
+//        // redisManager.setPassword(password);
+//        return redisManager;
+//    }
+//    @Bean
+//    public RedisCacheManager cacheManager1() {
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        redisCacheManager.setRedisManager(redisManager());
+//        redisCacheManager.setKeyPrefix("Cache");
+//        return redisCacheManager;
+//    }
+//    @Bean
+//    public KickoutSessionControlFilter kickoutSessionControlFilter(){
+//        KickoutSessionControlFilter kickoutSessionControlFilter = new KickoutSessionControlFilter();
+//        kickoutSessionControlFilter.setCacheManager(cacheManager1());
+//        kickoutSessionControlFilter.setKickoutAfter(false);
+//        kickoutSessionControlFilter.setMaxSession(1);
+//        kickoutSessionControlFilter.setKickoutUrl("/SysUser/loginOut");
+//        kickoutSessionControlFilter.setSessionManager(sessionManager());
+//        return kickoutSessionControlFilter;
+//    }
 }
